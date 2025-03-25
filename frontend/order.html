@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+     <!--=============== REMIXICONS ===============-->
+     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        /* Add your CSS styles here */
+        section {
+            position: relative;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #fce5e2;
+            color: #333;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+            height: 100vh;
+        }
+        .containers {
+            width: 60%;
+            height: 80vh;
+            /* max-width: 600px; */
+            background-color: fce5e2;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px 1px #b80000;
+        }
+        .containers h2{
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        form {
+height: 68vh;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-left: 4px solid #b80000;
+            border-right: 4px solid #b80000;
+            border-radius: 10px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        button {
+            grid-column: 1/3;
+            padding: 10px 20px;
+            background-color: #a92d2d;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #b80000;
+        }
+        #product-details {
+            background-color: white;
+            padding: 30px 0;
+            margin-right: 20px;
+            text-align: center;
+            box-shadow: 0 0 10px 2px #b80000;
+            background-color: #b80000;
+	background: radial-gradient(#f8e59ed5, #b80000);
+        }
+        #product-details img {
+            max-width: 60%;
+            height: auto;
+            /* border: 2px solid #007BFF; */
+            border-radius: 10px;
+            margin-bottom: 10px;
+            
+        }
+        #product-details h3 {
+            top: 0;
+            margin-bottom: 10px;
+            font-size: 30px;
+            background-color: #b80000;
+            padding: 20px;
+        }
+        #product-details p{
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+       .popup {
+         width: 250px;
+         height: 150px;
+         display: none;
+         position: fixed;
+         background:hsl(17, 20%, 18%); 
+         top: 24%;
+         right: 0;
+         left: 90%;
+         transform: translate(-50%, -50%);
+        color: white;
+         padding: 20px;
+         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+     }
+     
+     .poppes {
+         width: 100%;
+         height: 120vh;
+        
+         position: absolute;
+         background:hsl(116, 78%, 31%); 
+        top: 0;
+         /* transform: translate(-50%, -50%); */
+        color: white;
+         padding: 20px;
+         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+
+     }
+     #success-overlay{
+display: none;
+     }
+     .popup-close {
+         float: right;
+         cursor: pointer;
+     }
+     
+     .popup-content {
+         padding: 10px;
+     }
+     .popups-content p{
+       font-size: 50px;
+     }
+     .popups-content h3{
+       font-size: 50px;
+       text-align: center;
+     }
+     
+     .popup-content p {
+
+         margin-top: 10px;
+    text-align: center;
+     }
+     .popup-content button{
+      color: white;
+      margin-top: 40px;
+      margin-left: 50px;
+      border: none;
+      padding: 8px 15px;
+      text-transform: uppercase;
+      background-color: #970C0A;
+      letter-spacing: 1px;
+     }
+     @media screen and (max-width:768px) {
+        form {
+
+          display: block;
+        }
+        section {
+            position: relative;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #fce5e2;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            height: 200vh;
+        }
+        #product-details img {
+            width: 30%;
+            /* height: auto; */
+            /* border: 2px solid #007BFF; */
+            border-radius: 10px;
+            margin-bottom: 10px;
+            
+        }
+     }
+     
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+           <div class="nav__data">
+              <a href="#" class="nav__logo">
+                Pure Ghee
+              </a>
+              <div  class="user_info large" id="user-info"><a href="#"><i class="ri-shopping-cart-2-line"></i></a>
+                 <a href="#" onclick="togglePopup(event)"><i class="ri-user-3-line"></i></a>
+              </div>
+              <div class="nav__toggle" id="nav-toggle">
+                 <i class="ri-menu-line nav__burger"></i>
+                 <i class="ri-close-line nav__close"></i>
+              </div>
+           </div>
+
+           <!--=============== NAV MENU ===============-->
+           <div class="nav__menu" id="nav-menu">
+              <ul class="nav__list">
+                 <li><a href="./home.html" class="nav__link">Home</a></li>
+
+                 <li><a href="./allProducts.html" class="nav__link">Products</a></li>
+
+                 <!--=============== DROPDOWN 1 ===============-->
+                 <!-- <li class="dropdown__item">
+                    <div class="nav__link">
+                       Shop by Category <i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                    </div>
+
+                    <ul class="dropdown__menu">
+                       <li>
+                          <a href="#" class="dropdown__link">
+                             <i class="ri-verified-badge-line"></i></i> Cow Pure Ghee
+                          </a>                          
+                       </li>
+
+                       <li>
+                          <a href="#" class="dropdown__link">
+                             <i class="ri-verified-badge-fill"></i> Buffalow Pure Ghee
+                          </a>
+                       </li> -->
+
+                       <!--=============== DROPDOWN SUBMENU ===============-->
+                       <!-- <li class="dropdown__subitem">
+                          <div class="dropdown__link">
+                             <i class="ri-bar-chart-line"></i> Reports <i class="ri-add-line dropdown__add"></i>
+                          </div>
+
+                          <ul class="dropdown__submenu">
+                             <li>
+                                <a href="#" class="dropdown__sublink">
+                                   <i class="ri-file-list-line"></i> 
+                                </a>
+                             </li>
+     
+                             <li>
+                                <a href="#" class="dropdown__sublink">
+                                   <i class="ri-cash-line"></i> Payments
+                                </a>
+                             </li>
+     
+                             <li>
+                                <a href="#" class="dropdown__sublink">
+                                   <i class="ri-refund-2-line"></i> Refunds
+                                </a>
+                             </li>
+                          </ul>
+                       </li> -->
+                    <!-- </ul>
+                 </li> -->
+                 
+                 <!-- <li><a href="#" class="nav__link">Blogs</a></li> -->
+
+                 <!--=============== DROPDOWN 2 ===============-->
+                 <li class="dropdown__item">
+                    <div class="nav__link">
+                       Earn <i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                    </div>
+
+                    <ul class="dropdown__menu">
+                       <li>
+                          <a href="#" class="dropdown__link">
+                             <i class="ri-user-line"></i> Affiliate
+                          </a>                          
+                       </li>
+
+                       <li>
+                          <a href="#" class="dropdown__link">
+                             <i class="ri-bank-line"></i></i> Refer & Earn
+                          </a>
+                       </li>
+
+                      
+                    </ul>
+                 </li>
+
+                 <li><a href="#" class="nav__link">Wallet</a></li>
+              </ul>
+           </div>
+           
+           <div  class="user_info1" id="user-info"><a href="#"><i class="ri-shopping-cart-2-line"></i></a>
+              <a href="#" onclick="togglePopup(event)"><i class="ri-user-3-line"></i></a>
+           </div>
+           <div class="popup" id="user-popup">
+              <span class="popup-close" onclick="togglePopup(event)">&times;</span>
+              <div class="popup-content">
+                  <!-- User name and logout button -->
+                  <p>User Name</p>
+                  <button onclick="logout()">Logout</button>
+              </div>
+          </div>
+        </nav>
+     </header>
+  <section>
+    <div id="product-details">
+        <h3>Product Item</h3>
+        <img src="" alt="Product Image" class="product-image" id="product-image">
+        <p id="product-name"></p>
+    </div>
+    
+    <div class="containers">
+        <h2>Order Details</h2>
+        <form id="order-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+            <label for="mobile">Mobile:</label>
+            <input type="text" id="mobile" name="mobile" placeholder="Enter mobile number">
+
+            <label for="house">House No./Building/Apartment:</label>
+            <input type="text" id="house" name="house" placeholder="Enter House No./Building/Apartment">
+
+            <label for="area">Area/Street/Sector/Village:</label>
+            <input type="text" id="area" name="area" placeholder="Enter area" required>
+
+            <label for="landmark">Landmark:</label>
+            <input type="text" id="landmark" name="landmark" placeholder="Enter landmark">
+
+            <label for="pincode">Pincode:</label>
+            <input type="text" id="pincode" name="pincode" placeholder="Enter pincode" required>
+
+            <label for="town">Town/City:</label>
+            <input type="text" id="town" name="town" placeholder="Enter town/city" required>
+
+            <label for="state">State:</label>
+            <input type="text" id="state" name="state" placeholder="Enter state" required>
+
+            <button type="submit">Place Order</button>
+        </form>
+    </div>
+  </section>
+  
+    <div id="success-overlay" class="popups">
+        <div class="poppes">
+        <div class="popups-content">
+            <p>Your order has been placed successfully!</p>
+            <h3>🎉🎉🎉🎉</h3>
+        </div>
+    </div>
+  </div>
+ 
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const productName = urlParams.get('product');
+        const productImage = urlParams.get('image');
+
+        document.getElementById('product-name').textContent = productName;
+        document.getElementById('product-image').src = productImage;
+    });
+
+    const baseURL = 'https://pure-ghee-api.onrender.com/api/auth';
+    document.getElementById('order-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const orderData = {
+        name: formData.get('name'),
+        mobile: formData.get('mobile'),
+        house: formData.get('house'),
+        area: formData.get('area'),
+        landmark: formData.get('landmark'),
+        pincode: formData.get('pincode'),
+        town: formData.get('town'),
+        state: formData.get('state'),
+        product: document.getElementById('product-name').textContent
+    };
+
+    // Send the order data to the server
+    fetch(`${baseURL}/order`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Order placed successfully:', data);
+            alert('Order placed successfully!');
+            showSuccessOverlay();
+        })
+        .catch(error => {
+            console.error('Error placing order:', error);
+            alert('Error placing order. Please try again.');
+        });
+});
+
+function showSuccessOverlay() {
+    const successOverlay = document.getElementById('success-overlay');
+    successOverlay.style.display = 'block';
+
+    setTimeout(() => {
+        successOverlay.style.display = 'none';
+        // Redirect to the home page
+        window.location.href = './home.html';
+    }, 3000); // Show for 3 seconds (3000 milliseconds)
+}
+
+    </script>
+    <script>
+        function togglePopup(event) {
+   event.preventDefault();
+   const popup = document.getElementById('user-popup');
+   const username = localStorage.getItem('username');  // Get the username
+   const popupContent = document.querySelector('.popup-content p');
+   popupContent.textContent = `Welcome, ${username || 'User'}!`; // Display the username
+
+   popup.style.display = (popup.style.display === 'block') ? 'none' : 'block';
+}
+
+function logout() {
+   // Clear the stored username from localStorage
+   localStorage.removeItem('username');
+
+   // Redirect to the login page
+   window.location.href = './SignIn-SignUp-Form-main/index.html';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+   const userPopup = document.getElementById('user-popup');
+   
+   // Check if the user is logged in (has a stored username)
+   const storedUsername = localStorage.getItem('username');
+   
+   if (!storedUsername) {
+       // User is not logged in, redirect to the login page
+       window.location.href = './SignIn-SignUp-Form-main/index.html';
+   }
+   
+   // Display the stored username in the popup
+   const userNameElement = document.querySelector('.popup-content p');
+   if (userNameElement) {
+       userNameElement.textContent = storedUsername;
+   }
+});
+
+
+     </script>
+</body>
+</html>

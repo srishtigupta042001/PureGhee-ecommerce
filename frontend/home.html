@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+   <html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      <!--=============== REMIXICONS ===============-->
+      <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+
+      <!--=============== CSS ===============-->
+      <link rel="stylesheet" href="assets/css/styles.css">
+      <link rel="stylesheet" href="assets/css/stylehome.css">
+      <link rel="stylesheet" href="assets/css/testimonial.css">
+      <title>Responsive dropdown menu - Bedimcode</title>
+   </head>
+   <body>
+     <style>
+       .popup {
+         width: 250px;
+         height: 150px;
+         display: none;
+         position: fixed;
+         background:hsl(17, 20%, 18%); 
+         top: 24%;
+         right: 0;
+         left: 90%;
+         transform: translate(-50%, -50%);
+        color: white;
+         padding: 20px;
+         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+     }
+     
+     .popup-close {
+         float: right;
+         cursor: pointer;
+     }
+     
+     .popup-content {
+         padding: 10px;
+     }
+     
+     .popup-content p {
+
+         margin-top: 10px;
+    text-align: center;
+     }
+     .popup-content button{
+      color: white;
+      margin-top: 40px;
+      margin-left: 50px;
+      border: none;
+      padding: 8px 15px;
+      text-transform: uppercase;
+      background-color: #970C0A;
+      letter-spacing: 1px;
+     }
+     
+     </style>
+      <!--=============== HEADER ===============-->
+      <header class="header">
+         <nav class="nav container">
+            <div class="nav__data">
+               <a href="#" class="nav__logo">
+                 Pure Ghee
+               </a>
+               <div  class="user_info large" id="user-info"><a href="#"><i class="ri-shopping-cart-2-line"></i></a>
+                  <a href="#" onclick="togglePopup(event)"><i class="ri-user-3-line"></i></a>
+               </div>
+               <div class="nav__toggle" id="nav-toggle">
+                  <i class="ri-menu-line nav__burger"></i>
+                  <i class="ri-close-line nav__close"></i>
+               </div>
+            </div>
+
+            <!--=============== NAV MENU ===============-->
+            <div class="nav__menu" id="nav-menu">
+               <ul class="nav__list">
+                  <li><a href="./home.html" class="nav__link">Home</a></li>
+
+                  <li><a href="./allProducts.html" class="nav__link">Products</a></li>
+
+                  <!--=============== DROPDOWN 1 ===============-->
+                  <!-- <li class="dropdown__item">
+                     <div class="nav__link">
+                        Shop by Category <i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                     </div>
+
+                     <ul class="dropdown__menu">
+                        <li>
+                           <a href="#" class="dropdown__link">
+                              <i class="ri-verified-badge-line"></i></i> Cow Pure Ghee
+                           </a>                          
+                        </li>
+
+                        <li>
+                           <a href="#" class="dropdown__link">
+                              <i class="ri-verified-badge-fill"></i> Buffalow Pure Ghee
+                           </a>
+                        </li> -->
+
+                        <!--=============== DROPDOWN SUBMENU ===============-->
+                        <!-- <li class="dropdown__subitem">
+                           <div class="dropdown__link">
+                              <i class="ri-bar-chart-line"></i> Reports <i class="ri-add-line dropdown__add"></i>
+                           </div>
+
+                           <ul class="dropdown__submenu">
+                              <li>
+                                 <a href="#" class="dropdown__sublink">
+                                    <i class="ri-file-list-line"></i> 
+                                 </a>
+                              </li>
+      
+                              <li>
+                                 <a href="#" class="dropdown__sublink">
+                                    <i class="ri-cash-line"></i> Payments
+                                 </a>
+                              </li>
+      
+                              <li>
+                                 <a href="#" class="dropdown__sublink">
+                                    <i class="ri-refund-2-line"></i> Refunds
+                                 </a>
+                              </li>
+                           </ul>
+                        </li> -->
+                     <!-- </ul>
+                  </li> -->
+                  
+                  <!-- <li><a href="#" class="nav__link">Blogs</a></li> -->
+
+                  <!--=============== DROPDOWN 2 ===============-->
+                  <li class="dropdown__item">
+                     <div class="nav__link">
+                        Earn <i class="ri-arrow-down-s-line dropdown__arrow"></i>
+                     </div>
+
+                     <ul class="dropdown__menu">
+                        <li>
+                           <a href="#" class="dropdown__link">
+                              <i class="ri-user-line"></i> Affiliate
+                           </a>                          
+                        </li>
+
+                        <li>
+                           <a href="#" class="dropdown__link">
+                              <i class="ri-bank-line"></i></i> Refer & Earn
+                           </a>
+                        </li>
+
+                       
+                     </ul>
+                  </li>
+
+                  <li><a href="#" class="nav__link">Wallet</a></li>
+               </ul>
+            </div>
+            
+            <div  class="user_info1" id="user-info"><a href="#"><i class="ri-shopping-cart-2-line"></i></a>
+               <a href="#" onclick="togglePopup(event)"><i class="ri-user-3-line"></i></a>
+            </div>
+            <div class="popup" id="user-popup">
+               <span class="popup-close" onclick="togglePopup(event)">&times;</span>
+               <div class="popup-content">
+                   <!-- User name and logout button -->
+                   <p>User Name</p>
+                   <button onclick="logout()">Logout</button>
+               </div>
+           </div>
+         </nav>
+      </header>
+      <section class="img_overlay_section">
+         <div class="headimage">
+           
+         </div>
+         <div class="headimage_content">
+            <div class="head_content">
+               
+               <h1>Pure Ghee - Homemade</h1>
+               <p>At our Ghee store, Our homemade pure ghee is made with the utmost care and attention to ensure its great taste and affordable price.</p>
+               <button>Explore</button>
+            </div>
+         </div>
+      </section>
+      <section class="about_section">
+<div class="about_section_content">
+   <div class="about_img">
+      <div class="vertical_line"></div>
+      <div class="vertical_line"></div>
+      <img src="./assets/img/ghee.jpg" alt="" srcset="">
+   </div>
+   <div class="about_content">
+      <div class="underline"><h1>
+         ABOUT US
+      </h1></div>
+      <h2>Welcome to Pure Ghee, your one-stop-shop for fresh, high-quality nuts and homemade butter.</h2>
+      <p>At Pure Ghee, we’re passionate about delivering the best quality products at affordable prices.while our homemade Ghee is made with love and care for that authentic taste. We take pride in our products, and we know you’ll love them too.</p>
+      <div class="about_button">
+         <button>READ MORE</button>
+      </div>
+      
+   </div>
+</div>
+      </section>
+      <section class="about_section whyus">
+         <div class="chooseus_section">
+            <div class="chooseus_tophead">
+               <div class="underline1"><h1>
+                  Why Choose Us
+               </h1></div>
+               <p>We’re not just a Ghee store. We’re a family-owned business that cares about our customers and the quality of our products. Here are some reasons to choose Pure Ghee:</p>
+            </div>
+            <div class="chooseus_bottomhead">
+               <div class="chooseus_content">
+                  <h3>01</h3>
+                  <h2>Freshness Guarantee</h2>
+                  <p>Our nuts are sourced from the best suppliers and are always fresh, ensuring the perfect taste with every bite.</p>
+                  <div class="divider"></div>
+               </div>
+               <div class="chooseus_content">
+                  <h3>02</h3>
+                  <h2>Affordability</h2>
+                  <p>At Pure Ghee, we believe that high-quality, fresh products shouldn ’t come at a premium price. That ’s why we offer affordable prices for all our products.</p>
+                  <div class="divider"></div>
+               </div>
+               <div class="chooseus_content">
+                  <h3>03</h3>
+                  <h2>Homemade Butter</h2>
+                  <p>Our homemade butter is made with love and care, ensuring an authentic taste that you won ’t find anywhere else.</p>
+                   <div class="divider"></div>
+               </div>
+               <div class="chooseus_content">
+                  <h3>04</h3>
+                  <h2>Variety</h2>
+                  <p>OVarietyWe offer a wide selection of nuts and butter to choose from, so you can find your perfect match.</p>
+                   <div class="divider"></div>
+               </div>
+            </div>
+         </div>
+      </section>
+<section class="all_products">
+  <div class="all_prodect_container">
+   <div class="underline2"><h1>
+      Our Products
+   </h1></div>
+      <div class="allproduct_container">
+      <div class="card">
+        <div class="card-image">
+          <img src="./assets/img/gheee_box.png">
+        </div>
+        <div class="card-text">
+          <p class="card-meal-type">cow <span>/</span> Buffalow</p>
+          <h2 class="card-title">Pure Ghee</h2>
+          <p class="card-body">Pure ghee is a rich, nutty-tasting clarified butter, perfect for cooking and frying due to its high smoke point.</p>
+        </div>
+        <div class="card-price">$56</div>
+      </div>
+        <div class="card">
+        <div class="card-image">
+          <img src="./assets/img/dungcake.png">
+        </div>
+        <div class="card-text">
+          <p class="card-meal-type">cow <span>/</span> Buffalow</p>
+          <h2 class="card-title">DungCake</h2>
+          <p class="card-body">Dung cake is a traditional fuel source made from dried cow or buffalo dung, commonly used for cooking and Puja.</p>
+        </div>
+        <div class="card-price">$39</div>
+      </div>
+        <div class="card">
+        <div class="card-image">
+          <img src="./assets/img/honey.png">
+        </div>
+        <div class="card-text">
+          <p class="card-meal-type">Bee <span>'</span> s</p>
+          <h2 class="card-title">Pure Honey</h2>
+          <p class="card-body">Honey is nature's sweet nectar, offering a delicious, natural sweetness with potential health benefits.</p>
+        </div>
+        <div class="card-price">$69</div>
+      </div>
+        <div class="card">
+        <div class="card-image">
+          <img src="./assets/img/pipple_wood.png">
+        </div>
+        <div class="card-text">
+          <p class="card-meal-type">Pipple/Wood</p>
+          <h2 class="card-title">Pipple's twig</h2>
+          <p class="card-body">The pipal twig (pippal ki lakdi) is believed to have purifying and sanctifying properties.Or individuals during religious ceremonies,and blessings.</p> 
+        </div>
+        <div class="card-price">$104</div>
+      </div>
+      
+      </div>
+  </div>
+</section>
+<section class="deal_container">
+   <div class="deal_section">
+      <div class="deal_lest_content">
+         <h3>Deal of the week</h3>
+         <h1>Golden Savings: Ghee at Up to 20% Off </h1>
+         <button type="submit" class="button-50">Shop Now</button>
+      </div>
+      <div class="deal_roght_content">
+         <img src="./assets/img/ghee-png.png" alt="">
+      </div>
+   </div>
+</section>
+<section class="shipcontainer">
+   <div class="sipping_section">
+      
+      <div class="Shipping_ptoduct">
+         <div class="shippingprod">
+            <i class="ri-shopping-cart-fill"></i>
+         <h3>Select Ptoduct</h3>
+      </div>
+      <div class="divider_horizontal"></div>
+      </div>
+      <div class="Shipping_ptoduct">
+        <div class="shippingprod">
+         <i class="ri-bank-card-fill"></i>
+         <h3>Secure Payment</h3>
+      </div>
+      <div class="divider_horizontal"></div>
+      </div>
+      <div class="Shipping_ptoduct">
+         <div class="shippingprod">
+            <i class="ri-truck-fill"></i>
+         <h3>Fast Shipping</h3>
+         </div>
+         
+      </div>
+      
+   </div>
+   <div class="bottom_divider"></div>
+</section>
+
+<section id="our-mission" class="mission-section">
+   <div class="testimonial">
+      <div class="shadow"></div>
+      <span class="top border"></span>
+      <h1>Our Mission</h1>
+      <p>We are dedicated to producing the finest quality pure ghee while preserving the traditional methods. Our mission is to provide our customers with premium, authentic ghee that enhances the flavors of their meals and promotes a healthy lifestyle.</p>
+      <p class="source">&mdash;Pure Ghee</p>
+      <span class="bottom border"></span>
+   </div>
+</section>
+
+
+<footer>
+   <div class="footercontainer">
+     <div class="footer-content">
+       <div class="footer-section footerabout">
+         <h3>Pure Ghee</h3>
+         <p class="tagline">"Discover the Purity of Desi Ghee, Crafted for Your Culinary Delight"</p>
+       </div>
+ 
+       <div class="footer-section footerlinks">
+         <h2>Quick Links</h2>
+         <ul>
+           <li><a href="#">Home</a></li>
+           <li><a href="#">Deal</a></li>
+           <li><a href="#">Products</a></li>
+           <li><a href="#">Contact</a></li>
+         </ul>
+       </div>
+ 
+       <div class="footer-section contact">
+         <h2>Contact Us</h2>
+         <p class="footercontact">
+           Phone: +919782186238</p><br>
+           <p>Email: d1234567alchandsaini@gmail.com
+         </p>
+       </div>
+     </div>
+   </div>
+ 
+   <div class="footer-bottom">
+     <p>&copy; 2023 @PureGhee. All Rights Reserved.</p>
+   </div>
+ </footer>
+ 
+      <!--=============== MAIN JS ===============-->
+      <script src="./assets/js/main.js"></script>
+      <script>
+         function togglePopup(event) {
+    event.preventDefault();
+    const popup = document.getElementById('user-popup');
+    const username = localStorage.getItem('username');  // Get the username
+    const popupContent = document.querySelector('.popup-content p');
+    popupContent.textContent = `Welcome, ${username || 'User'}!`; // Display the username
+
+    popup.style.display = (popup.style.display === 'block') ? 'none' : 'block';
+}
+
+function logout() {
+    // Clear the stored username from localStorage
+    localStorage.removeItem('username');
+
+    // Redirect to the login page
+    window.location.href = './SignIn-SignUp-Form-main/index.html';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const userPopup = document.getElementById('user-popup');
+    
+    // Check if the user is logged in (has a stored username)
+    const storedUsername = localStorage.getItem('username');
+    
+    if (!storedUsername) {
+        // User is not logged in, redirect to the login page
+        window.location.href = './SignIn-SignUp-Form-main/index.html';
+    }
+    
+    // Display the stored username in the popup
+    const userNameElement = document.querySelector('.popup-content p');
+    if (userNameElement) {
+        userNameElement.textContent = storedUsername;
+    }
+});
+
+
+      </script>
+   </body>
+</html>

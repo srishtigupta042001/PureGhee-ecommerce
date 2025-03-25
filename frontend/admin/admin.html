@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Page</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f3f4f6;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        /* height: 100vh; */
+        color: #333;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .dashboard-section {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+        width: 80%;
+        max-width: 1200px;
+    }
+.order{
+    width: 100%;
+}
+    .dashboard-section h2 {
+        color: #4CAF50;
+        margin-bottom: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="number"] {
+        width: 80px;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 12px 24px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+    <div id="userList">
+        <h1>Admin Page</h1>
+    </div>
+  <div class="dashboard-section">
+    <h2>User List - Admin Dashboard</h2>
+    <table id="userTable">
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+        </tr>
+      
+    </table>
+</div>
+<div class="dashboard-section order">
+  <h2>Order Data - Admin Dashboard</h2>
+  <table id="orderTable">
+      <tr>
+          <th>Name</th>
+          <th>Mobile</th>
+          <th>House</th>
+          <!-- Add other fields here -->
+          <th>Area</th>
+          <th>Landmark</th>
+          <th>Pincode</th>
+          <th>Town/City</th>
+          <th>State</th>
+          <th>Product</th>
+          <th>Price</th> <!-- Added Price Column -->
+      </tr>
+      <!-- Data will be dynamically added here -->
+  </table>
+  </div>
+  <!-- <div class="dashboard-section ">
+  <h2>Update Product Prices</h2>
+  <div id="priceUpdateForm">
+    <label for="gheePrice">Ghee Price: </label>
+    <input type="number" id="gheePrice" min="0"><br><br>
+
+    <label for="dungcakePrice">Dung Cake Price: </label>
+    <input type="number" id="dungcakePrice" min="0"><br><br>
+
+    <label for="honeyPrice">Honey Price: </label>
+    <input type="number" id="honeyPrice" min="0"><br><br>
+
+    <label for="pipalPrice">Pipal's Twig Price: </label>
+    <input type="number" id="pipalPrice" min="0"><br><br>
+
+    <button onclick="updatePrices()">Update Prices</button>
+  </div>
+</div> -->
+  <script>
+    const displayUserData = (users) => {
+        const userTable = document.getElementById('userTable');
+
+        users.forEach(user => {
+            const row = userTable.insertRow();
+            row.innerHTML = `<td>${user.username}</td><td>${user.email}</td>`;
+        });
+    };
+
+    const displayOrderData = (orders) => {
+        const orderTable = document.getElementById('orderTable');
+        orders.forEach(order => {
+            const row = orderTable.insertRow();
+            row.innerHTML = `
+                <td>${order.name}</td>
+                <td>${order.mobile}</td>
+                <td>${order.house}</td>
+                <td>${order.area}</td>
+                <td>${order.landmark}</td>
+                <td>${order.pincode}</td>
+                <td>${order.town}</td>
+                <td>${order.state}</td>
+                <td>${order.product}</td>
+                <td>${order.price}</td>
+            `;
+        });
+    };
+
+    const fetchData = async () => {
+        try {
+            const [userResponse, orderResponse] = await Promise.all([
+                fetch('http://localhost:3000/api/auth/users'),
+                fetch('http://localhost:3000/api/auth/orders')
+            ]);
+
+            const userData = await userResponse.json();
+            const orderData = await orderResponse.json();
+
+            displayUserData(userData);
+            displayOrderData(orderData);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    const updatePrices = async () => {
+        const gheePrice = document.getElementById('gheePrice').value;
+        const dungcakePrice = document.getElementById('dungcakePrice').value;
+        const honeyPrice = document.getElementById('honeyPrice').value;
+        const pipalPrice = document.getElementById('pipalPrice').value;
+
+        const data = {
+            gheePrice,
+            dungcakePrice,
+            honeyPrice,
+            pipalPrice
+        };
+
+        try {
+            const response = await fetch('http://localhost:3000/api/auth/updatePrices', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            alert(result);
+        } catch (error) {
+            console.error('Error updating prices:', error);
+        }
+    };
+
+    fetchData();
+  </script>
+</body>
+</html>
